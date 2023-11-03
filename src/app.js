@@ -1,4 +1,3 @@
-"use strict";
 // 'dist', where we put our JS compiled code is --> distributable folder
 // ----- Using debugger -----
 // let age: number = 20
@@ -7,9 +6,9 @@
 // console.log(age);
 // ----- Using debugger -----
 // 1. --------------------------------
-let sales = 123;
-let course = 'TypeStric';
-let is_published = true;
+var sales = 123;
+var course = 'TypeStric';
+var is_published = true;
 /*
 In TypeScript we don't always have to annotate our variables,
 because the TS compiler can detect the type of our variables based on their value
@@ -24,7 +23,7 @@ In TS, we have a type called ANY, which can represent any kind of values
 So if we declare a value and don't initialize it, the TS complier assumes this
 variable is a type of ANY
 */
-let level;
+var level;
 level = 1; //First we can set it to a number
 level = 'a'; //And later we can set it to a string
 // But this against the whole idea of using TS, because we use TS for type safety,
@@ -47,14 +46,14 @@ function render(document) {
 // This won't work if we pass this array to a function that expects a list of numbers,
 // the third element will cause issues
 // Code completion(Intellisense)
-let numbers = [1, 2, 3];
+var numbers = [1, 2, 3];
 // numbers.forEach((n) => n.)
 // After typing 'n.', we can see all the properties and methods of number objects,
 // because the editor knows the type of 'n', it offers code completion, so we can see
 // all the methods of number objects
 // ---------- Arrays ---------
 // ---------- Tuples ---------
-let user = [1, 'Mosh'];
+var user = [1, 'Mosh'];
 /*
 Tuple is a fixed length array, where each element has a particular type
 We often use them when we work with a pair of values
@@ -70,4 +69,3 @@ We will get an error in case we try to add the third element in the example from
 // ---------- Tuples ---------
 // ---------- Enums ---------
 // ---------- Enums ---------
-//# sourceMappingURL=app.js.map
