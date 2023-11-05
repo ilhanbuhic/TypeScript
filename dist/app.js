@@ -109,4 +109,73 @@ let mySize = Size.medium;
 console.log(mySize);
 // If we define our enums using the 'const' keyword, the compiler will generate more optimized code
 // ---------- Enums ---------
+// ---------- Functions ---------
+function calculateTax(income) {
+    return 0;
+    return income;
+}
+/*
+    The type of return value inside of 'calculateTax' is 'void'
+    meaning that this function does not return a value
+    function calculateTax(income: number) {
+        <empty>
+    }
+
+    If we try to return a value(exp: number) and we didn't explicitly set the type
+    of our function, the function itself will return a number
+    function calculateTax(income: number) {
+    return 0
+    }
+    In this case, the TS compiler assigns the type of the return value automatically
+    As a best practice, we should always annotate our functions, all the parameters,
+    as well as the return types
+    function calculateTax(income: number):number {
+        return 0
+    }
+
+    Inside of tsconfig -> Type Cheking section, we have a compiler option, called noUnsuedParameters
+    We have to explicitly turn it on, because the setting is not part of strict setting
+
+    function calculateTax(income: number): number {
+        if (income < 50_000)
+        return income * 1.2
+        // This will show an error, because if we don't have an
+        // else block the return value will be undefined and undefined is not a number
+    }
+
+    To stop the compiler of showing that something is undefined, we can turn on a compiler function
+    for detecting this kind of issues in case we forget to return a value
+    This will detect that not all code paths return a value, so we can just do
+    function calculateTax(income: number):number {
+        if (income < 50_000)
+        return income * 1.2
+      return income * 1.3
+    }
+
+    There is another compiler setting for detecting local unsued variables
+    function calculateTax() {
+        let income;
+        // In case we don't use this 'income', it's unused
+        // We can turn on the setting in tsconfig --> noUnusedLocals
+        // When this is turned on, it will inform us that the 'income' is declared, but not used
+    }
+
+    If we want to pass-in 3 parameters inside a function and want to use only 2
+    We can make that parameter optional by adding '?'
+    But if we don't supply that parameter, by default 'undefined' will be used
+    and we cannot do anything with 'undefined'
+    We can do this:
+    function calculateTax(income: number, taxYear?: = 2020): number {
+        if ((taxYear) || 2020 < 2022)
+        return income * 1.2
+      return income * 1.3
+      // With this, we can call this function with or without a tax year
+      // If we don't supply an argument for the taxYear,
+      // the value inside of parameter will be used
+      // Otherwise, what we pass as an argument will be used of a function (line: 182) will be used
+      // It will overwrite a default value inside of parameter
+    }
+    console.log(calculateTax(10_000, 2023)
+*/
+// ---------- Functions --------- 
 //# sourceMappingURL=app.js.map
