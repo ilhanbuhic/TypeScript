@@ -35,7 +35,7 @@ level = 'a' //And later we can set it to a string
 // and major benefit of using TS
 
 function render(document: any) {
-    console.log(document)
+  console.log(document)
 }
 /* 
     In this function, we have an error where document implicitly has ANY type
@@ -49,7 +49,6 @@ function render(document: any) {
 */
 
 // ---------- The ANY type ---------
-
 
 // ---------- Arrays ---------
 // let numbers: number[] = [1, 2, '3']
@@ -102,27 +101,35 @@ let large = 3
 // By default, the TS compiler assigns the first memeber the value of 0
 // and other members 1, 2 and so on
 // In case we don't want to use these values, we can explicitly set these values
-enum anotherSize{small = 30, medium = 35, large = 40}
+enum anotherSize {
+  small = 30,
+  medium = 35,
+  large = 40,
+}
 
 // We can also use string values, but then we have to explicitly set a value for each member
-enum stringifiedSize{small = 's', medium = 'm', large = 'l'}
+enum stringifiedSize {
+  small = 's',
+  medium = 'm',
+  large = 'l',
+}
 
-enum Size{small = 1, medium, large}
+enum Size {
+  small = 1,
+  medium,
+  large,
+}
 // Using this enum, we can declare a new variable:
 let mySize: Size = Size.medium
-console.log(mySize);
+console.log(mySize)
 // If we define our enums using the 'const' keyword, the compiler will generate more optimized code
 
 // ---------- Enums ---------
 
-
-
-
-
 // ---------- Functions ---------
 function calculateTax(income: number) {
-    return 0
-    return income
+  return 0
+  return income
 }
 /*
     The type of return value inside of 'calculateTax' is 'void'
@@ -188,4 +195,113 @@ function calculateTax(income: number) {
     console.log(calculateTax(10_000, 2023)
 */
 
-// ---------- Functions --------- 
+// ---------- Functions ---------
+
+// ---------- Objects ---------
+// let employee: {id: number, name?: string} = {id: 1, name: 'Ilhan'}
+// We should explicitly asign a type for each property inside an object
+// We should avoid optional properties
+
+// We can also make certain properties READ-ONLY
+// let employee: {readonly id: number, name?: string} = {id: 1, name: 'Ilhan'}
+// employee.id = 0 // --> This is change is not possible, because of 'readonly'
+
+// let employee: { id: number; name?: string; retire: (date: Date) => void } = {
+//   id: 1,
+//   name: 'Ilhan',
+//   retire: (date: Date) => {
+//     console.log(date)
+//   },
+// }
+
+// ---------- Objects ---------
+
+// ---------- Aliases type ---------
+// let employee: {id: number, name?: string} = {id: 1, name: 'Ilhan'}
+/* There are 3 problems in this implementation
+   1. If we want to create another employee object,
+  we have to repeat the structure, instead of using DRY
+  2. Another employee object might have other properties,
+  so these 2 employee objects might not have consistent shape
+  3. This structure is making our code hard to read and understand
+  */
+// Using a custom alias, we can define a custom type
+type Employee = {
+  // We should define all the properties and methods
+  // an employee object should have
+  readonly id: number
+  name: string
+  retire: (date: Date) => void
+  // This is a single place where we can shape
+  // an employee object
+}
+let employee: Employee = {
+  id: 1,
+  name: 'Ilhan',
+  retire: (date: Date) => {
+    console.log(date)
+  },
+}
+
+// ---------- Aliases type ---------
+
+// ---------- Union types ---------
+// With union types, we can give a variable or
+// a function parameter more than 1 type
+
+function kgToLbs(weight: number | string) {
+  /*
+    Let's assume that this parameter can be a number or a string
+    So we annotate it with number | string
+    Using a verticle bar we can make a union type
+    We can now call this function using number or string
+   */
+  kgToLbs(10)
+  kgToLbs('10kg')
+  /* 
+    If we try to access propertie with .dot, we will
+     only see properties that are common between numbers and strings
+     This is where the technique called 'narrowing'
+     We are going to narrow down this union type into a more specific type
+  */
+  if (typeof weight === 'number') {
+    // In this block, the compiler knows that the weight is a number
+    // So if we try to access properties of weight. , we will see all
+    // the methods that are available in number objects
+    return weight * 2.2
+  } else {
+    // Here we will see all the properties and methods of string objects
+    return parseInt(weight) * 2.2
+  }
+
+}
+
+// ---------- Union types ---------
+
+// ---------- Intersection types ---------
+// There is another technique for combining types called intersection
+// Instead of vertical bar |, we will use &
+let weight: number & string
+// This type represents an object that is both number and a string at the same time
+// This is technically impossible, because we can't have
+// a an object that is both a number and a string at the same time
+
+type Draggable = {
+  drag: () => void
+}
+
+type Resizable = {
+  resize: () => void
+}
+
+// We are passing both types to the UIWidget type,
+// so that UIWidget can be both draggable and resizable
+type UIWidget = Draggable & Resizable
+
+let textBox: UIWidget = {
+  drag: () => {},
+  resize: () => {}
+}
+// ---------- Intersection types ---------
+
+

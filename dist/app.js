@@ -114,68 +114,51 @@ function calculateTax(income) {
     return 0;
     return income;
 }
-/*
-    The type of return value inside of 'calculateTax' is 'void'
-    meaning that this function does not return a value
-    function calculateTax(income: number) {
-        <empty>
+let employee = {
+    id: 1,
+    name: 'Ilhan',
+    retire: (date) => {
+        console.log(date);
+    },
+};
+// ---------- Aliases type ---------
+// ---------- Union types ---------
+// With union types, we can give a variable or
+// a function parameter more than 1 type
+function kgToLbs(weight) {
+    /*
+      Let's assume that this parameter can be a number or a string
+      So we annotate it with number | string
+      Using a verticle bar we can make a union type
+      We can now call this function using number or string
+     */
+    kgToLbs(10);
+    kgToLbs('10kg');
+    /*
+      If we try to access propertie with .dot, we will
+       only see properties that are common between numbers and strings
+       This is where the technique called 'narrowing'
+       We are going to narrow down this union type into a more specific type
+    */
+    if (typeof weight === 'number') {
+        // In this block, the compiler knows that the weight is a number
+        // So if we try to access properties of weight. , we will see all
+        // the methods that are available in number objects
+        return weight * 2.2;
     }
-
-    If we try to return a value(exp: number) and we didn't explicitly set the type
-    of our function, the function itself will return a number
-    function calculateTax(income: number) {
-    return 0
+    else {
+        // Here we will see all the properties and methods of string objects
+        return parseInt(weight) * 2.2;
     }
-    In this case, the TS compiler assigns the type of the return value automatically
-    As a best practice, we should always annotate our functions, all the parameters,
-    as well as the return types
-    function calculateTax(income: number):number {
-        return 0
-    }
-
-    Inside of tsconfig -> Type Cheking section, we have a compiler option, called noUnsuedParameters
-    We have to explicitly turn it on, because the setting is not part of strict setting
-
-    function calculateTax(income: number): number {
-        if (income < 50_000)
-        return income * 1.2
-        // This will show an error, because if we don't have an
-        // else block the return value will be undefined and undefined is not a number
-    }
-
-    To stop the compiler of showing that something is undefined, we can turn on a compiler function
-    for detecting this kind of issues in case we forget to return a value
-    This will detect that not all code paths return a value, so we can just do
-    function calculateTax(income: number):number {
-        if (income < 50_000)
-        return income * 1.2
-      return income * 1.3
-    }
-
-    There is another compiler setting for detecting local unsued variables
-    function calculateTax() {
-        let income;
-        // In case we don't use this 'income', it's unused
-        // We can turn on the setting in tsconfig --> noUnusedLocals
-        // When this is turned on, it will inform us that the 'income' is declared, but not used
-    }
-
-    If we want to pass-in 3 parameters inside a function and want to use only 2
-    We can make that parameter optional by adding '?'
-    But if we don't supply that parameter, by default 'undefined' will be used
-    and we cannot do anything with 'undefined'
-    We can do this:
-    function calculateTax(income: number, taxYear?: = 2020): number {
-        if ((taxYear) || 2020 < 2022)
-        return income * 1.2
-      return income * 1.3
-      // With this, we can call this function with or without a tax year
-      // If we don't supply an argument for the taxYear,
-      // the value inside of parameter will be used
-      // Otherwise, what we pass as an argument will be used of a function (line: 182) will be used
-      // It will overwrite a default value inside of parameter
-    }
-    console.log(calculateTax(10_000, 2023)
-*/
-// ---------- Functions --------- 
+}
+// ---------- Union types ---------
+// ---------- Intersection types ---------
+// There is another technique for combining types called intersection
+// Instead of vertical bar |, we will use &
+let weight;
+let textBox = {
+    drag: () => { },
+    resize: () => { }
+};
+// ---------- Intersection types ---------
 //# sourceMappingURL=app.js.map
