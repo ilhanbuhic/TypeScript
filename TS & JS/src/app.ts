@@ -304,4 +304,54 @@ let textBox: UIWidget = {
 }
 // ---------- Intersection types ---------
 
+// ---------- Literal types ---------
+/*
+  Sometimes we want to limit types we can assign to a variable
+  This is where we can use literal types
+  Instead of annotating 'quantity' with a type number,
+  we can annotate it with any specific number that we want
+  Instead, we want to annotate it with exact or specific value
+  let quantity: 50 | 100 = 50 // We can also set an union type
+*/
 
+// Instead of hard-coding these literal values,
+// we can create a custom type using a type alias
+type Quantity = 50 | 100 // This is called a literal type
+let quantity: Quantity = 50
+// Literals doesn't have to be numbers, they can also be strings
+type Metric = 'cm' | 'inch'
+let metric: Metric = 'cm'
+
+// ---------- Literal types ---------
+
+// ---------- Nullable types ---------
+// By default TS will stop us from accidentally making
+// any variable null or undefined,
+//so we can use nullable and union type do solve this
+function greet(name: string | null | undefined) {
+  if (name)
+    console.log(name.toLocaleUpperCase())
+  else
+    console.log('Hi')
+}
+greet(undefined)
+// ---------- Nullable types ---------
+
+// ---------- Optiona chaining ---------
+type Customer = {
+  birthday: Date
+}
+
+function getCustomer(id: number): Customer | null {
+  return id === 0 ? null : {birthday: new Date()}
+}
+
+// Optional property access operator
+let customer = getCustomer(1)
+console.log(customer?.birthday?.getFullYear())
+
+// Optional element access operator
+let log: any = undefined
+log?.('a')
+
+// ---------- Optiona chaining ---------

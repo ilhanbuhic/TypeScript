@@ -1,5 +1,6 @@
 "use strict";
 // 'dist', where we put our JS compiled code is --> distributable folder
+var _a;
 // ----- Using debugger -----
 // let age: number = 20
 // if (age < 50)
@@ -160,5 +161,28 @@ let textBox = {
     drag: () => { },
     resize: () => { }
 };
-// ---------- Intersection types ---------
+let quantity = 50;
+let metric = 'cm';
+// ---------- Literal types ---------
+// ---------- Nullable types ---------
+// By default TS will stop us from accidentally making
+// any variable null or undefined,
+//so we can use nullable and union type do solve this
+function greet(name) {
+    if (name)
+        console.log(name.toLocaleUpperCase());
+    else
+        console.log('Hi');
+}
+greet(undefined);
+function getCustomer(id) {
+    return id === 0 ? null : { birthday: new Date() };
+}
+// Optional property access operator
+let customer = getCustomer(1);
+console.log((_a = customer === null || customer === void 0 ? void 0 : customer.birthday) === null || _a === void 0 ? void 0 : _a.getFullYear());
+// Optional element access operator
+let log = undefined;
+log === null || log === void 0 ? void 0 : log('a');
+// ---------- Optiona chaining ---------
 //# sourceMappingURL=app.js.map
