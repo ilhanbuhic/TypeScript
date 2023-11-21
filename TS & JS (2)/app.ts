@@ -93,4 +93,31 @@
     
     // -------------- Adding types to function --------------
     
+    // -------------- Creating custom types / type aliases --------------
+    // 'type' keyword is a TS keyword that allows us to create custom types
+    // To actually add a name to a custom type
+    
+    // We can create an AddFn and use it as a custom type and then reuse it
+    type AddFn = (a: number, b: number) => number
+    
+    function add2(a: number, b: number) {
+      const result = a + b
+      return result
+    }
+    
+    function caculate2(a: number, b: number, calcFn: AddFn) {
+      calcFn(a, b)
+    }
+    caculate2(2, 5, add2)
+    
+    type customUser = {
+      name: string;
+      age: number;
+      isAdmin: boolean;
+      id: string | number
+    }
+    
+    let customUser: customUser
+    
+    // -------------- Creating custom types / type aliases --------------
     
