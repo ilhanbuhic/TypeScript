@@ -47,5 +47,50 @@
     
     // -------------- Object types --------------
     
-
+    // -------------- Array types --------------
+    // let hobbies: Array
+    // hobbies = ['Sports', 'Cooking', 'Reading']
+    // This array type 'Array' only works if we give it more information
+    // about other related types
+    
+    // Therefore an array type that consists of string elements inside of an array
+    // needs to be written like this -->
+    // Option #1:
+    let hobbies1: Array<string>
+    hobbies1 = ['Sports', 'Cooking', 'Reading']
+    // We put it like this we we want an array of string values
+    // We are not able to mutate this array afterwards
+    // hobbies = [1. 2, 3] --> ERROR
+    
+    // Option #2:
+    let hobbies2: string[]
+    hobbies2 = ['Sports', 'Cooking', 'Reading']
+    // We can also have number[], boolean[]
+    
+    // We can also have arrays of object
+    // {name: string, age: number}[]
+    // We can do this when we want to have objects of this structure in an array
+    
+    // -------------- Array types --------------
+    
+    // -------------- Adding types to function --------------
+    function add1(a: number, b: number) {
+      const result = a + b
+      return result
+    }
+    // In case we have a function that doesn't return anything, we should use VOID
+    
+    // We can also add a function parameter to a function
+    
+    function caculate1(
+      a: number,
+      b: number,
+      calcFn: (a: number, b: number) => number
+    ) {
+      calcFn(a, b)
+    }
+    caculate1(2, 5, add1)
+    
+    // -------------- Adding types to function --------------
+    
     
