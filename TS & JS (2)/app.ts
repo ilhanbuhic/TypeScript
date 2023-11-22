@@ -141,3 +141,69 @@ creds = {
 // -------------- Defining Object Types with Interfaces --------------
 
 
+// -------------- Interface vs Custom Type --------------
+/*
+  We can use both 'interface' and 'type' for defining object type
+  We can generally always use the 'type' keyword
+  which also allows us to define other types than object types --> (line: 101)
+  'Interface' is limited, because we can't store a union type like we can with 'type'
+*/
+
+// If we're defining a class of credentials,
+// we can use the 'implements' keyword to implement an interface
+
+class AuthCredentials implements Credentials {
+  /*
+    We have to add the email and password,
+    key, value pairs to this class
+    We can also add additional properties to this class,
+    but we have to at least implement these properties from an interface
+  */
+  email: string;
+  password: string;
+  userName: string;
+}
+// This then forces us to add the properties and methods
+// that are defined in  the object of that interface in our class
+
+// We can also create a login function,
+// where we expect to get credentials of type 'Credentials'
+
+function login(credentials: Credentials) {
+
+}
+
+// login could be then called with both 'creds' object
+login(creds)
+
+// But we could also call login with a new instance of AuthCredentials, 
+// since that also implements 'Credentials'
+login(new AuthCredentials())
+// This works, because an instance 'AuthCredentials' of 'Credentials' interface
+// has the ALL SAME methods and properties as the 'Credentials' interface
+
+// This feature where we can implement 'interfaces' into classes
+// can be a reason for using 'interfaces' over the 'type' keyword
+// if we are working on a project where we're using classes
+
+// Another reason for using the 'interface' keyword
+// for defining an object type is that it's easily extendable
+// We can easily redefine the same 'interface', with the same name,
+// without getting an error and add more properties and methods to it
+
+// interface Credentials {
+//   mode: string;
+// }
+
+/*
+  The reason why we should do it like this and not just add up there
+  because this method can be useful if we're for example creating a library
+  which we are sharing with other developers from all over the world
+  and I have my own interface definition in some part of my library,
+  but I want to allow those developers to easily extend my interface
+  This feature is called 'declaration merging'
+  With this, other developers can just redefine my interface with my name
+  and add any properties or methods they need
+*/
+
+// -------------- Interface vs Custom Type --------------
