@@ -207,3 +207,61 @@ login(new AuthCredentials())
 */
 
 // -------------- Interface vs Custom Type --------------
+
+
+// -------------- Merging types --------------
+type Admin1 = {
+  permission: string[]
+}
+
+type AppUser1 = {
+  userName: string
+}
+
+// We could merge these 2 types manually,
+// but we might have a reason for keeping them separated
+// Because maybe somewhere in the app, we will need just an Admin or just an AppUser type
+// Therefore we want to keep these separate types, but we also wanna create a merged type
+// We could just manually merge these types
+// by copying all those different properties into a new type object
+// type AppAdmin = {
+//   permission: string[];
+//   userName: string
+// }
+// Instead of this, we could do it in a different way
+// because it can be troublesome if we have too many properties and methods
+// If we try to use a union type --> type AppAdmin = Admin | AppUser
+// This is not a great idea
+// because now AppAdmin can be just 1 of these types, instead of merging them
+// To merge these types, we are going to use an & operator
+type AppAdmin1 = Admin1 & AppUser1
+// With this AppAdmin is the combination of these 2 types
+let admin1: AppAdmin1
+
+admin1 = {
+  permission: ['login'],
+  userName: 'Ilhan',
+  // This variable 'admin' must be an object with all the methods and properties
+  // from both 'Admin' and "AppUser" types
+}
+
+
+// We can do the same by using an 'interface' keyword
+interface Admin2 {
+  permission: string[]
+}
+
+interface AppUser2 {
+  userName: string
+}
+
+interface AppAdmin2 extends Admin2, AppUser2 {
+  // We could also add any additional properties if we might need
+}
+let admin2: AppAdmin2
+admin2 = {
+  permission: ['login'],
+  userName: 'Ilhan',
+}
+
+// -------------- Merging types --------------
