@@ -89,8 +89,67 @@ creds = {
 };
 // -------------- Defining Object Types with Interfaces --------------
 // -------------- Interface vs Custom Type --------------
-// We can use both 'interface' and 'type' for defining object type
-// We can generally always use the 'type' keyword
-// which also allows us to define other types than object types --> (line: 101)
-// 'Interface' is limited, because we can't store a union type like we can with 'type'
-// -------------- Interface vs Custom Type --------------
+/*
+  We can use both 'interface' and 'type' for defining object type
+  We can generally always use the 'type' keyword
+  which also allows us to define other types than object types --> (line: 101)
+  'Interface' is limited, because we can't store a union type like we can with 'type'
+*/
+// If we're defining a class of credentials,
+// we can use the 'implements' keyword to implement an interface
+var AuthCredentials = /** @class */ (function () {
+    function AuthCredentials() {
+    }
+    return AuthCredentials;
+}());
+// This then forces us to add the properties and methods
+// that are defined in  the object of that interface in our class
+// We can also create a login function,
+// where we expect to get credentials of type 'Credentials'
+function login(credentials) {
+}
+// login could be then called with both 'creds' object
+login(creds);
+// But we could also call login with a new instance of AuthCredentials, 
+// since that also implements 'Credentials'
+login(new AuthCredentials());
+// With this AppAdmin is the combination of these 2 types
+var admin1;
+admin1 = {
+    permission: ['login'],
+    userName: 'Ilhan',
+    // This variable 'admin' must be an object with all the methods and properties
+    // from both 'Admin' and "AppUser" types
+};
+var admin2;
+admin2 = {
+    permission: ['login'],
+    userName: 'Ilhan',
+};
+// -------------- Merging types --------------
+// -------------- Literal types --------------
+// let role
+// We want to set this variable to be either 'admin, 'user', 'editor'
+// For this we can use the literal type and set this variable to accept a specific value
+// We can set a specific string as a type
+var role; // This forces 'role' to be exactly this value
+function performAction(action, specRole) {
+    // Now we want to check if 'role' is admin, we want to do a specific action
+    if (role === 'admin') {
+        // ...
+    }
+}
+// -------------- Adding Type Guard --------------
+// -------------- Type Guard & Type Narrowing --------------
+/*
+  When using 'Type Guards', TypeScript performs so-scalled 'Type Narrowing'
+  This means that TypeScript is able to narrow a broader type down to a more specific type
+*/
+function combine(a, b) {
+    if (typeof a === 'number' && typeof b === 'number') {
+        return a + b;
+    }
+    return "".concat(a, " ").concat(b);
+}
+console.log(combine(2, 5));
+// -------------- Type Guard & Type Narrowing --------------

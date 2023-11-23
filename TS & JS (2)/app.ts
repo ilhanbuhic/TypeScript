@@ -17,33 +17,33 @@ user = {
 }
 user = {}
 /* 
-        Because we annotated user as an object, it allows us to
-        store different number of properties inside of an object,
-        but it also allows us to redeclare an object wihtout any key, value pairs
-        And in most situations that's not what we want
+    Because we annotated user as an object, it allows us to
+    store different number of properties inside of an object,
+    but it also allows us to redeclare an object wihtout any key, value pairs
+    And in most situations that's not what we want
     
-        In usual cases, we want to make sure that user must always be an object
-        with exactly specific structure
-    */
+    In usual cases, we want to make sure that user must always be an object
+    with exactly specific structure
+*/
 
 // Instead of setting user like this --> let user: object
 // We can do this instead --> let user: {}
 // Now, inside of this user object, we can define everything that we want in specific
 /*
-        let user = {
-            name: string;
-            age: number;
-            isAdmin: boolean;
-            id: string | number;
-            // When defining a type, we should use ';', instead of a ','
-            // When defining a value, we should use ',', instead of a ';'
-        }
+    let user = {
+        name: string;
+        age: number;
+        isAdmin: boolean;
+        id: string | number;
+        // When defining a type, we should use ';', instead of a ','
+        // When defining a value, we should use ',', instead of a ';'
+      }
         With this, we are setting the user of the shape that we want
     
         Now if we try to redeclare this user to an empty object, we would get an error
         user = {} --> ERROR
         Because an empty object doesn't have the same shape as the one we declared above
-    */
+*/
 
 // -------------- Object types --------------
 
@@ -140,7 +140,6 @@ creds = {
 
 // -------------- Defining Object Types with Interfaces --------------
 
-
 // -------------- Interface vs Custom Type --------------
 /*
   We can use both 'interface' and 'type' for defining object type
@@ -159,9 +158,9 @@ class AuthCredentials implements Credentials {
     We can also add additional properties to this class,
     but we have to at least implement these properties from an interface
   */
-  email: string;
-  password: string;
-  userName: string;
+  email: string
+  password: string
+  userName: string
 }
 // This then forces us to add the properties and methods
 // that are defined in  the object of that interface in our class
@@ -169,14 +168,12 @@ class AuthCredentials implements Credentials {
 // We can also create a login function,
 // where we expect to get credentials of type 'Credentials'
 
-function login(credentials: Credentials) {
-
-}
+function login(credentials: Credentials) {}
 
 // login could be then called with both 'creds' object
 login(creds)
 
-// But we could also call login with a new instance of AuthCredentials, 
+// But we could also call login with a new instance of AuthCredentials,
 // since that also implements 'Credentials'
 login(new AuthCredentials())
 // This works, because an instance 'AuthCredentials' of 'Credentials' interface
@@ -207,7 +204,6 @@ login(new AuthCredentials())
 */
 
 // -------------- Interface vs Custom Type --------------
-
 
 // -------------- Merging types --------------
 type Admin1 = {
@@ -245,7 +241,6 @@ admin1 = {
   // from both 'Admin' and "AppUser" types
 }
 
-
 // We can do the same by using an 'interface' keyword
 interface Admin2 {
   permission: string[]
@@ -265,7 +260,6 @@ admin2 = {
 }
 
 // -------------- Merging types --------------
-
 
 // -------------- Literal types --------------
 // let role
@@ -287,5 +281,58 @@ function performAction(action: string, specRole: specifiedRole) {
   }
 }
 
-
 // -------------- Adding Type Guard --------------
+
+// -------------- Type Guard & Type Narrowing --------------
+/*
+  When using 'Type Guards', TypeScript performs so-scalled 'Type Narrowing'
+  This means that TypeScript is able to narrow a broader type down to a more specific type
+*/
+
+function combine(a: number | string, b: number | string) {
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a + b
+  }
+  return `${a} ${b}`
+}
+
+// -------------- Type Guard & Type Narrowing --------------
+
+// -------------- Generic types --------------
+let roles: Array<specifiedRole>
+// This built-in 'Array' type is a generic type
+// Roles would now only accept 'specifiedRole' strings
+roles = ['admin', 'user']
+// We could've also wirrten it like this --> let role: specifiedRole[]
+
+// We can also build our own generic type
+// Generic types are types that work together with another type
+
+// We can build a DataStorage type, which we want to be an object type
+type DataStorage<T> = {
+  // We also want to have a storage proeprty, which shoud be an array,
+  // but an array ful of data which we don't know in advance
+  // So we don't know what the shape or type of data will be
+  // It could be a bunch of strings, objects, ...
+  // Therefore we need a type placeholder
+  storage: T[] // This will be an array of T, which is also a generic type
+  // But it will be an array full of values, which types we don't know yet
+  add: (
+    data: T /* Type of this data will also be that generic type placeholder */
+  ) => void
+}
+// Now we can use this type to create multiple storages for different data,
+// because it's a flexible, a generic type
+// We can make a variable 'textStorage', which should be a type of DataStorage,
+// but inside of it we want to store a bunch of strings in that DataStorage,
+// So we pass 'string' as a value for 'T' placeholder
+const textStorage: DataStorage<string> = {
+  storage: [],
+  // This storage should be filled only with strings
+  // because we defined DataStorage with <string> (line: 327)
+  add(data /* This add method also needs to accept string data */) {
+    this.storage.push(data)
+  },
+}
+
+// -------------- Generic types --------------
