@@ -265,3 +265,27 @@ admin2 = {
 }
 
 // -------------- Merging types --------------
+
+
+// -------------- Literal types --------------
+// let role
+// We want to set this variable to be either 'admin, 'user', 'editor'
+// For this we can use the literal type and set this variable to accept a specific value
+// We can set a specific string as a type
+let role: 'admin' | 'user' | 'editor' // This forces 'role' to be exactly this value
+
+// -------------- Literal types --------------
+
+// -------------- Adding Type Guard --------------
+// We sometimes want for code to only be executed if we have a specific value type
+type specifiedRole = 'admin' | 'user' | 'editor'
+
+function performAction(action: string, specRole: specifiedRole) {
+  // Now we want to check if 'role' is admin, we want to do a specific action
+  if (role === 'admin') {
+    // ...
+  }
+}
+
+
+// -------------- Adding Type Guard --------------
